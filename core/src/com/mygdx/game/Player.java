@@ -15,8 +15,10 @@ public class Player {
     public String SpriteRoute;
     public Texture img;
     public int actualMove;
+    float lastX;
 
     public Player(float initialX, float intialY){
+        lastX= 0;
         x = initialX;
         y = intialY;
         actualMove = 0;
@@ -24,12 +26,23 @@ public class Player {
         Print();
     }
 
+    public void MoveRight(){
+        lastX = x;
+        x += Gdx.graphics.getDeltaTime() * speed;
+        Paint();
+    }
+
     public void Move(){
-        float lastX = x;
+        String t = "";
         if(Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))
             x -= Gdx.graphics.getDeltaTime() * speed;
         if(Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT))
-            x += Gdx.graphics.getDeltaTime() * speed;
+            MoveRight();
+    }
+
+    private void Paint()
+    {
+
         if(x > lastX) {
             if(actualMove <= 5) {
                 SpriteRoute = "Mario2.png";
@@ -62,6 +75,7 @@ public class Player {
             actualMove = 0;
             SpriteRoute = "Mario1.png";
         }
+
         Print();
     }
 
